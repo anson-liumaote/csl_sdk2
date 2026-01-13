@@ -33,7 +33,7 @@ private:
  std::array<uint32_t, 2> sn_ = { };
  std::array<uint32_t, 2> version_ = { };
  uint16_t bandwidth_ = 0;
- ::unitree_go::msg::dds_::IMUState_ imu_state_;
+ std::array<::unitree_go::msg::dds_::IMUState_, 5> imu_state_ = { };
  std::array<::unitree_go::msg::dds_::MotorState_, 20> motor_state_ = { };
  ::unitree_go::msg::dds_::BmsState_ bms_state_;
  std::array<int16_t, 4> foot_force_ = { };
@@ -60,7 +60,7 @@ public:
     const std::array<uint32_t, 2>& sn,
     const std::array<uint32_t, 2>& version,
     uint16_t bandwidth,
-    const ::unitree_go::msg::dds_::IMUState_& imu_state,
+    const std::array<::unitree_go::msg::dds_::IMUState_, 5>& imu_state,
     const std::array<::unitree_go::msg::dds_::MotorState_, 20>& motor_state,
     const ::unitree_go::msg::dds_::BmsState_& bms_state,
     const std::array<int16_t, 4>& foot_force,
@@ -120,14 +120,17 @@ public:
   uint16_t bandwidth() const { return this->bandwidth_; }
   uint16_t& bandwidth() { return this->bandwidth_; }
   void bandwidth(uint16_t _val_) { this->bandwidth_ = _val_; }
-  const ::unitree_go::msg::dds_::IMUState_& imu_state() const { return this->imu_state_; }
-  ::unitree_go::msg::dds_::IMUState_& imu_state() { return this->imu_state_; }
-  void imu_state(const ::unitree_go::msg::dds_::IMUState_& _val_) { this->imu_state_ = _val_; }
-  void imu_state(::unitree_go::msg::dds_::IMUState_&& _val_) { this->imu_state_ = _val_; }
+  
+  const std::array<::unitree_go::msg::dds_::IMUState_, 5>& imu_state() const { return this->imu_state_; }
+  std::array<::unitree_go::msg::dds_::IMUState_, 5>& imu_state() { return this->imu_state_; }
+  void imu_state(const std::array<::unitree_go::msg::dds_::IMUState_, 5>& _val_) { this->imu_state_ = _val_; }
+  void imu_state(std::array<::unitree_go::msg::dds_::IMUState_, 5>&& _val_) { this->imu_state_ = _val_; }
+
   const std::array<::unitree_go::msg::dds_::MotorState_, 20>& motor_state() const { return this->motor_state_; }
   std::array<::unitree_go::msg::dds_::MotorState_, 20>& motor_state() { return this->motor_state_; }
   void motor_state(const std::array<::unitree_go::msg::dds_::MotorState_, 20>& _val_) { this->motor_state_ = _val_; }
   void motor_state(std::array<::unitree_go::msg::dds_::MotorState_, 20>&& _val_) { this->motor_state_ = _val_; }
+
   const ::unitree_go::msg::dds_::BmsState_& bms_state() const { return this->bms_state_; }
   ::unitree_go::msg::dds_::BmsState_& bms_state() { return this->bms_state_; }
   void bms_state(const ::unitree_go::msg::dds_::BmsState_& _val_) { this->bms_state_ = _val_; }
@@ -565,8 +568,11 @@ bool write(T& streamer, const ::unitree_go::msg::dds_::LowState_& instance, enti
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.imu_state(), prop))
+      // if (!write(streamer, instance.imu_state(), prop))
+      for (const auto & i_1:instance.imu_state()) {  //array depth 1
+      if (!write(streamer, i_1, prop))
         return false;
+      }
       if (!streamer.finish_member(*prop))
         return false;
       break;
@@ -796,8 +802,12 @@ bool read(T& streamer, ::unitree_go::msg::dds_::LowState_& instance, entity_prop
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.imu_state(), prop))
+      for (auto & i_1:instance.imu_state()) {  //array depth 1
+      if (!read(streamer, i_1, prop))
         return false;
+      }
+      // if (!read(streamer, instance.imu_state(), prop))
+      //   return false;
       if (!streamer.finish_member(*prop))
         return false;
       break;
@@ -1027,8 +1037,12 @@ bool move(T& streamer, const ::unitree_go::msg::dds_::LowState_& instance, entit
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.imu_state(), prop))
+      // if (!move(streamer, instance.imu_state(), prop))
+      //   return false;
+      for (const auto & i_1:instance.imu_state()) {  //array depth 1
+      if (!move(streamer, i_1, prop))
         return false;
+      }
       if (!streamer.finish_member(*prop))
         return false;
       break;
@@ -1258,8 +1272,12 @@ bool max(T& streamer, const ::unitree_go::msg::dds_::LowState_& instance, entity
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.imu_state(), prop))
+      // if (!max(streamer, instance.imu_state(), prop))
+        // return false;
+      for (const auto & i_1:instance.imu_state()) {  //array depth 1
+      if (!max(streamer, i_1, prop))
         return false;
+      }
       if (!streamer.finish_member(*prop))
         return false;
       break;

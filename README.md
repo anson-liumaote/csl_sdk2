@@ -1,8 +1,9 @@
-# unitree_sdk2
-Unitree robot sdk version 2.
+# csl_sdk2
+* sdk for CSL pineapple robots
+* refer to [unitree_sdk2](https://github.com/unitreerobotics/unitree_sdk2.git)
 
 ### Prebuild environment
-* OS  (Ubuntu 20.04 LTS)  
+* OS  (Ubuntu 20.04 LTS and 22.04 LTS)  
 * CPU  (aarch64 and x86_64)   
 * Compiler  (gcc version 9.4.0) 
 
